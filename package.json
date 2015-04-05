@@ -1,0 +1,9 @@
+{
+  "name": "drum-machine-server",
+  "version": "0.0.1",
+  "description": "backend for collaborative drum machine",
+  "dependencies": {
+    "express": "^4.12.3",
+    "socket.io": "^1.3.5"
+  }
+}

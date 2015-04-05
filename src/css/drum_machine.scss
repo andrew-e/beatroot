@@ -1,0 +1,21 @@
+body {
+  background-color: rgb(255, 235, 235);
+}
+
+.drum-machine {
+  position: fixed;
+  width: 600px;
+  height: 600px;
+  margin-left: -300px;
+  margin-top: -300px;
+  top: 50%;
+  left: 50%;
+}
+
+.drum-machine td {
+  background-color: rgb(181, 204, 167);
+}
+
+.drum-machine td.active {
+  background-color: rgb(172, 255, 171);
+}
