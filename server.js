@@ -4,15 +4,9 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 var size = 16;
-var drumState = new Array(size);
-for (var i = 0; i < size; i++)
-  drumState[i] = new Array(size);
-
-for (var i = 0; i < size; i++) {
-  for (var j = 0; j < size; j++){
-    drumState[i][j] = false;
-  }
-}
+var drumState = new Array(size*size);
+for (var i = 0; i < size*size; i++)
+  drumState[i] = false; 
 
 app.use(express.static('dist'));
 
@@ -27,13 +21,10 @@ io.on('connection', function(socket){
     socket.emit('setDrumState', drumState);
   });
   socket.on('toggle', function(pos){
-    drumState[~~(pos/size)][pos%size] = !drumState[~~(pos/size)][pos%size];
+    drumState[pos] = !drumState[pos];
     console.log('broadcasting new drum state');
-    var flat = drumState.reduce(function(a, b){
-      return a.concat(b);
-    });
     var s = 'Active drums: ';
-    flat.forEach(function(cur, i){
+    drumState.forEach(function(cur, i){
       if (cur) s += ' ' + i;
     });
     console.log(s);

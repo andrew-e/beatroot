@@ -23,10 +23,21 @@ var Chat = React.createClass({
 });
 
 var Drums = React.createClass({
+  mixins: [Reflux.listenTo(DrumStore,"update")],
+  getInitialState: function() {
+    return {
+      pads: []
+    };
+  },
+  update: function(padState) {
+    this.setState({pads: padState});
+  },
   render: function() {
     var rows = [];
-    for (var i = 0; i < this.props.size; i++) 
-      rows.push(<Row key={i} pos={i} size={this.props.size} />);
+    var size = this.props.size;
+    for (var i = 0; i < size; i++){
+      rows.push(<Row key={i} pos={i} padsOn={this.state.pads} size={size} />);
+    }
     return (
       <table className="drum-machine">
         {rows}
@@ -37,11 +48,12 @@ var Drums = React.createClass({
 
 var Row = React.createClass({
   render: function() {
+    var padsOn= this.props.padsOn;
     var size = this.props.size;
     var k = size * this.props.pos;
     var row = [];
     for (var i = k; i < k+size; i++)
-      row.push(<Pad key={i} pos={i} />);
+      row.push(<Pad key={i} pos={i} padIsOn={padsOn[i]}/>);
     return (
       <tr>
         {row}
@@ -51,21 +63,11 @@ var Row = React.createClass({
 });
 
 var Pad = React.createClass({
-  mixins: [Reflux.listenTo(DrumStore,"toggleOn")],
-  getInitialState: function() {
-    return {active: false};
-  },
-  toggleOn: function(state, p) {
-    if (p == this.props.pos)
-      this.setState({active: state});
-  },
   handleClick: function() {
     Actions.togglePad(this.props.pos);
-    this.toggle(this.props.pos);
-    this.setState({active: !this.state.active});
   },
   render: function() {
-    var active = this.state.active ? "active" : "";
+    var active = this.props.padIsOn ? "active" : "";
     return (
       <td className={active} onClick={this.handleClick}></td>
     );
