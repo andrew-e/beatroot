@@ -5,3 +5,4 @@ var io = require('./socket');
 var audio = require('./audio');
 
 React.render(<DrumMachine />, document.getElementById('content'));
+audio();

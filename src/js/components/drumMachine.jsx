@@ -53,9 +53,9 @@ var Row = React.createClass({
     var k = size * this.props.pos;
     var row = [];
     for (var i = k; i < k+size; i++)
-      row.push(<Pad key={i} pos={i} padIsOn={padsOn[i]}/>);
+      row.push(<Pad key={i} pos={i} id={this.props.pos} padIsOn={padsOn[i]}/>);
     return (
-      <tr>
+      <tr id={this.props.pos}>
         {row}
       </tr>
     );
@@ -69,7 +69,7 @@ var Pad = React.createClass({
   render: function() {
     var active = this.props.padIsOn ? "active" : "";
     return (
-      <td className={active} onClick={this.handleClick}></td>
+      <td className={active} id={this.props.pos} onClick={this.handleClick}></td>
     );
   }
 });
