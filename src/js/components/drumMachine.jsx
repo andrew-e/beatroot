@@ -36,7 +36,7 @@ var Drums = React.createClass({
     var rows = [];
     var size = this.props.size;
     for (var i = 0; i < size; i++){
-      rows.push(<Row key={i} pos={i} padsOn={this.state.pads} size={size} />);
+      rows.push(<Row key={i} rowId={i} padsOn={this.state.pads} size={size} />);
     }
     return (
       <table className="drum-machine">
@@ -50,12 +50,12 @@ var Row = React.createClass({
   render: function() {
     var padsOn= this.props.padsOn;
     var size = this.props.size;
-    var k = size * this.props.pos;
+    var k = size * this.props.rowId;
     var row = [];
     for (var i = k; i < k+size; i++)
-      row.push(<Pad key={i} pos={i} id={this.props.pos} padIsOn={padsOn[i]}/>);
+      row.push(<Pad key={i} id={i} padIsOn={padsOn[i]}/>);
     return (
-      <tr id={this.props.pos}>
+      <tr id={this.props.rowId}>
         {row}
       </tr>
     );
@@ -64,12 +64,12 @@ var Row = React.createClass({
 
 var Pad = React.createClass({
   handleClick: function() {
-    Actions.togglePad(this.props.pos);
+    Actions.togglePad(this.props.id);
   },
   render: function() {
     var active = this.props.padIsOn ? "active" : "";
     return (
-      <td className={active} id={this.props.pos} onClick={this.handleClick}></td>
+      <td className={active} id={this.props.id} onClick={this.handleClick}></td>
     );
   }
 });

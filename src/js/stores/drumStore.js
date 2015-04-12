@@ -11,6 +11,7 @@ var DrumsStore = Reflux.createStore({
     });
     socket.emit('getDrumState');
   },
+
   onTogglePad: function(pos) {
     socket.emit('toggle', pos);
   }
