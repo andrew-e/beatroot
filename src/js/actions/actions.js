@@ -1,7 +1,8 @@
 var Reflux = require('reflux');
 
 var Actions = Reflux.createActions([
-  "togglePad"
+  "togglePad",
+  "chat"
 ]);
 
 module.exports = Actions;

@@ -2,23 +2,90 @@ var React = require('react');
 var Reflux = require('reflux');
 var Actions = require('../actions/actions.js');
 var DrumStore = require('../stores/drumStore.js');
+var ChatStore = require('../stores/chatStore.js');
 
 var DrumMachine = React.createClass({
   render: function(){
     return (
       <div>
-        <Drums size={16} />
-        <Chat />
+        <main>
+          <Drums size={16} />
+        </main>
+        <aside>
+          <Chat />
+        </aside>
       </div>
     );
   }
 });
 
-var Chat = React.createClass({
-  render: function() {
-    return(
-      <div></div>  
+var ChatMessage = React.createClass({
+  render: function(){
+    var msg = this.props.message;
+    return (
+      <li className="chat-item">
+        <h4 className="chat-author">{msg.author}</h4>
+        <div className="chat-text">{msg.text}</div>
+      </li>
     );
+  }
+});
+
+var Chat = React.createClass({
+  mixins: [Reflux.listenTo(ChatStore,"append")],
+  getInitialState: function() {
+    return {messages: []};
+  },
+  append: function(message) {
+    console.log('appending' + message);
+    var messages = this.state.messages;
+    messages.push(message);
+    this.setState({messages: messages});
+    console.log('chatstate: ' + this.state.messages);
+  },
+  render: function() {
+    var chatMessages = this.state.messages.map(function(msg){
+      return (
+        <ChatMessage message = {msg} />
+      );
+    });
+    return(
+      <div>
+        <h1>Drum Machine</h1>
+        <p>A collaborative drum machine built with React, Reflux, Node, SocketIO and Web Audio API</p>
+        <ul className="chat">
+          {chatMessages}
+        </ul>
+        <Input />
+      </div>  
+    );
+  }
+});
+
+var Input = React.createClass({
+  getInitialState: function() {
+    return { text: '' };
+  },
+
+  render: function() {
+    return (
+      <textarea className="chat-input" value={this.state.text} onChange={this.onChange} onKeyDown={this.onEnter} />
+    );
+  },
+  
+  onChange: function(event, value) {
+    this.setState({text: event.target.value});
+  },
+
+  onEnter: function(event) {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      var text = this.state.text.trim();
+      if (text) {
+        Actions.chat(text);
+      }
+      this.setState({text: ''});
+    }
   }
 });
 
@@ -39,9 +106,11 @@ var Drums = React.createClass({
       rows.push(<Row key={i} rowId={i} padsOn={this.state.pads} size={size} />);
     }
     return (
-      <table className="drum-machine">
-        {rows}
-      </table>
+      <div id="drum-container">
+        <table className="drum-table">
+          {rows}
+        </table>
+      </div>
     );
   }
 });

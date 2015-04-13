@@ -17,7 +17,7 @@ function schedule() {
     // Examine DOM for active pads at current
     // rhythmIndex and schedule notes 
     // TODO: cache these jquery refs?
-    $('.drum-machine tbody').children().each(function(i) {
+    $('.drum-table tbody').children().each(function(i) {
       if ($(this).children().eq(rhythmIndex).hasClass('active')) {
         scheduleNote(i, contextPlayTime);
       }
@@ -30,7 +30,7 @@ function schedule() {
 
 function scheduleNote(row, time) {
   // TODO: Generic note generation
-  var BbMinor = [233.08, 261, 63, 277.18, 311.13, 
+  var BbMinor = [233.08, 261, 277.18, 311.13, 
       349.23, 369.99, 415.30, 466.16, 523.25, 
       554.37, 622.25, 698.46, 739.99, 830.61, 
       932.33, 1046.5];

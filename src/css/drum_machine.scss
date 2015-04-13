@@ -1,21 +1,74 @@
+@import url('http://fonts.googleapis.com/css?family=Source+Sans+Pro');
+
 body {
-  background-color: rgb(255, 235, 235);
+  //background-color: #fbf2ad; 
+  //background-color: #fffad7; 
+  font-family: 'Source Sans Pro', sans-serif;
+  background-color: #fff;
+  margin: 0;
 }
 
-.drum-machine {
-  position: fixed;
+.container {
+  height: auto;
+}
+
+p {
+  color: #66757f;
+  font-size: 1.2em;
+  line-height: 1.35em;
+  font-style: normal;
+  font-weight: 400;
+}
+
+div {
+  display: block;
+}
+
+main {
+  width: 100%;
+  height: 100vh;
+  float: left;
+  margin-right: -340px;
+}
+
+#drum-container {
+  margin-right: 340px;
+}
+
+aside {
+  width: 340px;
+  float: right;
+  height: 100vh;
+  background-color: #fff; 
+}
+
+.drum-table {
   width: 600px;
   height: 600px;
-  margin-left: -300px;
-  margin-top: -300px;
-  top: 50%;
-  left: 50%;
+  //position: fixed;
+  //margin-left: -300px;
+  //margin-top: -300px;
+  //top: 50%;
+  //left: 50%;
 }
 
-.drum-machine td {
-  background-color: rgb(181, 204, 167);
+table {
+  border-collapse: collapse;
+  border: 1px solid #ccf;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
 }
 
-.drum-machine td.active {
+.drum-table td {
+  border-left: 1px solid #ccf;
+  border-top: 1px solid #ccf;
+  //background-color: rgb(181, 204, 167);
+}
+
+.drum-table td:hover {
+  background-color: #f8f8ff;
+}
+
+.drum-table td.active {
   background-color: rgb(172, 255, 171);
 }
