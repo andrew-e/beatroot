@@ -16,25 +16,21 @@ app.get('/', function(req, res){
 });
 
 io.on('connection', function(socket){
-  console.log('connected');
+  console.log('User connected');
   socket.on('getDrumState', function(){
-    console.log('in getDrumState');
     socket.emit('setDrumState', drumState);
   });
   socket.on('toggle', function(pos){
     if (pos >= 0 && pos < size*size) {
       drumState[pos] = !drumState[pos];
-      console.log('broadcasting new drum state');
       var s = 'Active drums: ';
       drumState.forEach(function(cur, i){
         if (cur) s += ' ' + i;
       });
-      console.log(s);
       io.sockets.emit('setDrumState', drumState);
     }
   });
   socket.on('chat', function(msg){
-    console.log(msg);
     io.sockets.emit('chat', msg);
   });
 });
