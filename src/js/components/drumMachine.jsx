@@ -7,13 +7,49 @@ var ChatStore = require('../stores/chatStore.js');
 var DrumMachine = React.createClass({
   render: function(){
     return (
-      <div>
+      <div className="app-container">
         <main>
           <Drums size={16} />
         </main>
         <aside>
           <Chat />
         </aside>
+        <Popup />
+      </div>
+    );
+  }
+});
+
+var Popup = React.createClass({
+  getInitialState: function(){
+    return {
+      text: '',
+      hide: false
+    };
+  }, 
+
+  onChange: function(event) {
+    this.setState({text: event.target.value});
+  },
+
+  onEnter: function(event) {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      var text = this.state.text.trim();
+      if (text) {
+        Actions.setName(text);
+      }
+      this.setState({hide: true});
+    }
+  },
+
+  render: function(){
+    var c = this.state.hide ? "hidden" : "overlay";
+    return (
+      <div className={c}>
+        <div className="overlay-msg">
+          <input type="text" onKeyDown={this.onEnter} value={this.state.text} onChange={this.onChange} placeholder="Enter Your Name" autoFocus />
+        </div>
       </div>
     );
   }
@@ -25,7 +61,7 @@ var ChatMessage = React.createClass({
     return (
       <li className="chat-item">
         <h4 className="chat-author">{msg.author}</h4>
-        <div className="chat-text">{msg.text}</div>
+        <p>{msg.text}</p>
       </li>
     );
   }
@@ -37,12 +73,20 @@ var Chat = React.createClass({
     return {messages: []};
   },
   append: function(message) {
-    console.log('appending' + message);
     var messages = this.state.messages;
     messages.push(message);
     this.setState({messages: messages});
-    console.log('chatstate: ' + this.state.messages);
   },
+
+  componentDidUpdate: function() {
+    this.scrollToBottom();
+  },
+
+  scrollToBottom: function() {
+    var l = this.refs.msgList.getDOMNode();
+    l.scrollTop = l.scrollHeight;
+  },
+    
   render: function() {
     var chatMessages = this.state.messages.map(function(msg){
       return (
@@ -50,15 +94,46 @@ var Chat = React.createClass({
       );
     });
     return(
-      <div>
-        <h1>Drum Machine</h1>
-        <p>A collaborative drum machine built with React, Reflux, Node, SocketIO and Web Audio API</p>
-        <ul className="chat">
-          {chatMessages}
-        </ul>
-        <Input />
+      <div className="side-bar">
+        <Logo />
+        <div className="chat-container">
+          <ul ref="msgList" className="chat">
+            {chatMessages}
+          </ul>
+          <Input />
+        </div>
+        <Footer />
       </div>  
     );
+  }
+});
+
+var Footer = React.createClass({
+  render: function() {
+    return (
+      <h3>2015 - <a href="www.github.com/wpote">Github</a></h3>
+    );
+  }
+});
+
+var Logo = React.createClass({
+  render: function() {
+    return (
+      <div className="logo">
+        <h1>PotePads</h1>
+        <h2>A collaborative drum machine built with React, Reflux, SocketIO, NodeJS and the Web Audio API.</h2>
+      </div>
+    );
+  }
+});
+
+var LogoImg = React.createClass({
+  render: function() {
+    <table>
+      <tr><td></td><td className="tdLogoBordered"></td><td></td></tr>
+      <tr><td className="tdLogoBordered"></td><td className="tdLogoBordered"></td><td className="tdLogoBordered"></td></tr>
+      <tr><td></td><td></td><td className="tdLogoBordered"></td></tr>
+    </table>
   }
 });
 
@@ -69,7 +144,7 @@ var Input = React.createClass({
 
   render: function() {
     return (
-      <textarea className="chat-input" value={this.state.text} onChange={this.onChange} onKeyDown={this.onEnter} />
+      <textarea className="chat-input" value={this.state.text} onChange={this.onChange} onKeyDown={this.onEnter} autoFocus />
     );
   },
   
@@ -82,7 +157,11 @@ var Input = React.createClass({
       event.preventDefault();
       var text = this.state.text.trim();
       if (text) {
-        Actions.chat(text);
+        if (text.indexOf("/name") == 0) {
+          Actions.setName(text.substring(6,60));
+        } else {
+          Actions.chat(text);
+        }
       }
       this.setState({text: ''});
     }
@@ -132,7 +211,9 @@ var Row = React.createClass({
 });
 
 var Pad = React.createClass({
-  handleClick: function() {
+  handleClick: function(event) {
+    event.stopPropagation();
+    event.preventDefault();
     Actions.togglePad(this.props.id);
   },
   render: function() {

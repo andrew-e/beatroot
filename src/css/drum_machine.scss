@@ -1,10 +1,24 @@
-@import url('http://fonts.googleapis.com/css?family=Source+Sans+Pro');
+@import url('http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,300,400');
+@import url(http://fonts.googleapis.com/css?family=Oleo+Script+Swash+Caps);
+
+$primary-colour: #597EA9;
+$second-colour: #A55B5B;
+$border-thickness: 3px;
+$border: $border-thickness solid $primary-colour;
+$border-thick: 10px solid $primary-colour;
+$border-sec: $border-thickness solid $second-colour;
+$bg-colour: #fefefe;
+$black: #6D665C;
+
+//TODO: sassify: widths all as variables, centerings etc calculated using them, no hardcoded dimensions,
+//TODO: media-width mobilify
 
 body {
-  //background-color: #fbf2ad; 
-  //background-color: #fffad7; 
-  font-family: 'Source Sans Pro', sans-serif;
-  background-color: #fff;
+  background-color: $bg-colour;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  color: $black;
+  background-color: #FCFCFC;
   margin: 0;
 }
 
@@ -12,63 +26,223 @@ body {
   height: auto;
 }
 
+a {
+  text-decoration: none;
+  color: $black; 
+}
+
+a:hover {
+  border-bottom: 1px solid;
+  color: rgb(48,0,255);
+}
+
 p {
   color: #66757f;
   font-size: 1.2em;
   line-height: 1.35em;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
 }
 
 div {
   display: block;
 }
 
-main {
-  width: 100%;
-  height: 100vh;
-  float: left;
-  margin-right: -340px;
+.app-container {
+  width: 860px;
+  height: 600px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -300px;
+  margin-left: -430px;
 }
 
-#drum-container {
-  margin-right: 340px;
+main {
+  width: 600px;
+  height: 600px;
+  float: left;
 }
 
 aside {
-  width: 340px;
-  float: right;
-  height: 100vh;
-  background-color: #fff; 
+  width: 240px;
+  float: left;
+  height: 600px;
+  margin-left: 20px;
+}
+
+.chat-container {
+  width: 100%;
+}
+
+.side-bar {
+  width:100%;
+  height: 505px;
+  margin-top: -252px;
+  top: 50%;
+  position: relative;
 }
 
 .drum-table {
   width: 600px;
   height: 600px;
-  //position: fixed;
-  //margin-left: -300px;
-  //margin-top: -300px;
-  //top: 50%;
-  //left: 50%;
 }
+
 
 table {
   border-collapse: collapse;
-  border: 1px solid #ccf;
+  border: $border;
   border-radius: 5px;
   -moz-border-radius: 5px;
 }
 
 .drum-table td {
-  border-left: 1px solid #ccf;
-  border-top: 1px solid #ccf;
-  //background-color: rgb(181, 204, 167);
+  border: $border;
 }
 
 .drum-table td:hover {
-  background-color: #f8f8ff;
+  background-color: #F9E3E3;
 }
 
 .drum-table td.active {
-  background-color: rgb(172, 255, 171);
+  background-color: #C3C8FF;
+}
+
+.overlay {
+  opacity: 1;
+  visibility: visible;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0,0,0,0.6);
+  z-index: 10;
+}
+
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.overlay-msg {
+  width: 200px;
+  height: 30px;
+  position: fixed;
+  background: $bg-colour;
+  top: 50%;
+  left: 50%;
+  margin-left: -100px;
+  margin-top: -15px;
+  z-index: 15;
+}
+
+input {
+  width: 200px;
+  height: 30px;
+  padding: 15px 10px;
+  outline: 0;
+  border: $border-thick;
+  font-size: 1.5rem;
+}
+
+.chat {
+  height: 250px;
+  border: $border-sec;
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+  overflow-y: auto;
+}
+
+.chat-item {
+  padding-top: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 0px;
+}
+
+.chat-item h4 {
+  font-color: #333;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-weight: 600px;
+}
+
+.chat-item p {
+  font-color: #333;
+  margin-top: 5px; 
+  margin-bottom: 5px; 
+  font-size: 12px;
+}
+
+.chat-input {
+  resize: none;
+  border: $border-sec; 
+  background-color: transparent;
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  -webkit-box-sizing: border-box; 
+  -moz-box-sizing: border-box;    
+  box-sizing: border-box;
+}
+
+.name-field {
+  border: $border;
+  border: 0;
+  padding: 15px 10px;
+  width: 100%;
+  font-size: 12px;
+  //outline: 0;
+  box-sizing: border-box;
+}
+
+.logo {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.logo h1 {
+  color: $primary-colour;
+  font-size: 46px;
+  -webkit-font-smoothing: antialiased;
+  font-family: Oleo Script Swash Caps, cursive;
+  font-weight: 200;
+  margin: 0;
+  line-height: 1.5;
+  text-align: center;
+  background: -webkit-linear-gradient(#2bf, #F22);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 1px 1px 0 hsla(0,0%,0%,.1);
+}
+
+.logo h2 {
+  color: #6D665C;
+  margin-top: 0px;
+  text-align: center;
+  font-size: 14px;
+  letter-spacing: .02em;
+  font-weight: 200;
+  text-shadow: 1px 1px 0 hsla(0,0%,0%,.1);
+}
+
+h3 {
+  color: #6D665C;
+  font-size: 10px;
+  text-align: center;
+  font-weight: 200;
+}
+
+.logo table {
+  margin: 0 auto;
+  border-collapse: collapse;
+  border: 0;
+  width: 50px;
+  height: 50px;
+}
+
+.tdLogoBordered {
+  border: $border;
 }

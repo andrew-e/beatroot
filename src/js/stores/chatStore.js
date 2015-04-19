@@ -2,19 +2,23 @@ var Reflux = require('reflux');
 var Actions = require('../actions/actions.js');
 var socket = require('../socket');
 
+var username = 'Guest';
 var ChatStore = Reflux.createStore({
   init: function() {
     this.listenTo(Actions.chat, this.sendChat);
+    this.listenTo(Actions.setName, this.setName);
     var self = this;
     socket.on('chat', function(message) {
-      console.log(message);
       self.trigger(message);
     });
   },
 
+  setName: function(name) {
+    username = name;
+  },
+
   sendChat: function(msg) {
-    console.log('emitting' + msg);
-    socket.emit('chat', {author: 'test', text: msg});
+    socket.emit('chat', {author: username, text: msg});
   }
 });
 
