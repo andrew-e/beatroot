@@ -111,7 +111,7 @@ var Chat = React.createClass({
 var Footer = React.createClass({
   render: function() {
     return (
-      <h3>2015 - <a href="www.github.com/wpote">Github</a></h3>
+      <h3>2015 - <a href="http://www.github.com/wpote/drummachine">Github</a></h3>
     );
   }
 });

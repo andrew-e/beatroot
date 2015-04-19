@@ -44,7 +44,7 @@ function scheduleNote(row, time) {
   oscillator.connect(gain);
   gain.connect(context.destination);
   oscillator.start(time);
-  //oscillator.stop(time + (60 / tempo) * 0.25);
+  oscillator.stop(time + (60 / tempo) * 0.25);
 }
 
 function advanceNote() {
