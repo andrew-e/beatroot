@@ -1,8 +1,8 @@
 var React = require('react');
 var Reflux = require('reflux');
-var DrumMachine = require('./components/drumMachine.jsx');
+var PadApp = require('./components/App.jsx');
 var io = require('./socket');
 var audio = require('./audio');
 
-React.render(<DrumMachine />, document.getElementById('content'));
+React.render(<PadApp />, document.getElementById('content'));
 audio();

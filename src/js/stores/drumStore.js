@@ -3,6 +3,7 @@ var Actions = require('../actions/actions.js');
 var socket = require('../socket');
 
 var DrumsStore = Reflux.createStore({
+
   init: function() {
     this.listenTo(Actions.togglePad, this.onTogglePad);
     var self = this;
@@ -15,6 +16,7 @@ var DrumsStore = Reflux.createStore({
   onTogglePad: function(pos) {
     socket.emit('toggle', pos);
   }
+
 });
 
 module.exports = DrumsStore;
