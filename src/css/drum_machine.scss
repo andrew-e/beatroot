@@ -9,13 +9,20 @@ $border-thick: 10px solid $primary-colour;
 $border-sec: $border-thickness solid $second-colour;
 $bg-colour: #fefefe;
 $black: #6D665C;
+$font-main: 'Open Sans', sans-serif;
+$main-width: 600px;
+$main-height: 600px;
+$side-width: 240px;
+$side-height: 600px;
+$margin-between: 20px;
+$app-width: $main-width + $side-width + $margin-between;
+$app-height: $main-height;
 
-//TODO: sassify: widths all as variables, centerings etc calculated using them, no hardcoded dimensions,
 //TODO: media-width mobilify
 
 body {
   background-color: $bg-colour;
-  font-family: 'Open Sans', sans-serif;
+  font-family: $font-main;
   font-weight: 400;
   color: $black;
   background-color: #FCFCFC;
@@ -33,7 +40,7 @@ a {
 
 a:hover {
   border-bottom: 1px solid;
-  color: rgb(48,0,255);
+  color: $primary-colour;
 }
 
 p {
@@ -48,27 +55,28 @@ div {
   display: block;
 }
 
+
 .app-container {
-  width: 860px;
-  height: 600px;
+  width: $app-width;
+  height: $app-height;
   position: fixed;
   top: 50%;
   left: 50%;
-  margin-top: -300px;
-  margin-left: -430px;
+  margin-top: ($app-height / 2) * -1;
+  margin-left: ($app-width / 2) * -1;
 }
 
 main {
-  width: 600px;
-  height: 600px;
+  width: $main-width;
+  height: $main-height;
   float: left;
 }
 
 aside {
-  width: 240px;
+  width: $side-width;
   float: left;
-  height: 600px;
-  margin-left: 20px;
+  height: $side-height;
+  margin-left: $margin-between;
 }
 
 .chat-container {
@@ -83,12 +91,6 @@ aside {
   position: relative;
 }
 
-.drum-table {
-  width: 600px;
-  height: 600px;
-}
-
-
 table {
   border-collapse: collapse;
   border: $border;
@@ -96,16 +98,19 @@ table {
   -moz-border-radius: 5px;
 }
 
-.drum-table td {
-  border: $border;
-}
+.drum-table {
+  width: $main-width;
+  height: $main-height;
+  td {
+    border: $border;
+  }
+  td:hover {
+    background-color: #F9E3E3;
+  }
 
-.drum-table td:hover {
-  background-color: #F9E3E3;
-}
-
-.drum-table td.active {
-  background-color: #C3C8FF;
+  td.active {
+    background-color: #C3C8FF;
+  }
 }
 
 .overlay {
@@ -160,29 +165,29 @@ input {
   padding-left: 10px;
   padding-right: 10px;
   padding-bottom: 0px;
-}
-
-.chat-item h4 {
-  font-color: #333;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  font-weight: 600px;
-}
-
-.chat-item p {
-  font-color: #333;
-  margin-top: 5px; 
-  margin-bottom: 5px; 
-  font-size: 12px;
+  h4 {
+    font-color: #333;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-weight: 600px;
+  }
+  p {
+    font-color: #333;
+    margin-top: 5px; 
+    margin-bottom: 5px; 
+    font-size: 12px;
+  }
 }
 
 .chat-input {
+  font-size: 12px;
   resize: none;
   border: $border-sec; 
   background-color: transparent;
   width: 100%;
   margin-top: 10px;
   padding: 10px;
+  outline: 0;
   -webkit-box-sizing: border-box; 
   -moz-box-sizing: border-box;    
   box-sizing: border-box;
@@ -194,38 +199,35 @@ input {
   padding: 15px 10px;
   width: 100%;
   font-size: 12px;
-  //outline: 0;
   box-sizing: border-box;
 }
 
 .logo {
   width: 100%;
   margin-bottom: 20px;
-}
-
-.logo h1 {
-  color: $primary-colour;
-  font-size: 46px;
-  -webkit-font-smoothing: antialiased;
-  font-family: Oleo Script Swash Caps, cursive;
-  font-weight: 200;
-  margin: 0;
-  line-height: 1.5;
-  text-align: center;
-  background: -webkit-linear-gradient(#2bf, #F22);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 1px 1px 0 hsla(0,0%,0%,.1);
-}
-
-.logo h2 {
-  color: #6D665C;
-  margin-top: 0px;
-  text-align: center;
-  font-size: 14px;
-  letter-spacing: .02em;
-  font-weight: 200;
-  text-shadow: 1px 1px 0 hsla(0,0%,0%,.1);
+  h1 {
+    color: $primary-colour;
+    font-size: 46px;
+    -webkit-font-smoothing: antialiased;
+    font-family: Oleo Script Swash Caps, cursive;
+    font-weight: 200;
+    margin: 0;
+    line-height: 1.5;
+    text-align: center;
+    background: -webkit-linear-gradient(#2bf, #F22);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 1px 1px 0 hsla(0,0%,0%,.1);
+  }
+  h2 {
+    color: #6D665C;
+    margin-top: 0px;
+    text-align: center;
+    font-size: 14px;
+    letter-spacing: .02em;
+    font-weight: 200;
+    text-shadow: 1px 1px 0 hsla(0,0%,0%,.1);
+  }
 }
 
 h3 {
@@ -233,16 +235,4 @@ h3 {
   font-size: 10px;
   text-align: center;
   font-weight: 200;
-}
-
-.logo table {
-  margin: 0 auto;
-  border-collapse: collapse;
-  border: 0;
-  width: 50px;
-  height: 50px;
-}
-
-.tdLogoBordered {
-  border: $border;
 }
