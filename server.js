@@ -9,6 +9,7 @@ for (var i = 0; i < size*size; i++)
   drumState[i] = false; 
 
 app.use(express.static('dist'));
+app.set('port', (process.env.PORT || 3000));
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/dist/index.html');
@@ -38,7 +39,6 @@ io.on('connection', function(socket){
   });
 });
 
-
-http.listen(3000, function(){
-  console.log('listening on *:3000');
+http.listen(app.get('port'), function(){
+  console.log('App running on *:' + app.get('port'));
 });
