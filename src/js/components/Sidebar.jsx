@@ -22,7 +22,7 @@ var Logo = React.createClass({
   render: function() {
     return (
       <div className="logo">
-        <h1>PotePads</h1>
+        <h1>MultiPad</h1>
         <h2>A collaborative drum machine built with React, Reflux, SocketIO, NodeJS and the Web Audio API.</h2>
       </div>
     );
